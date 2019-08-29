@@ -58,4 +58,5 @@ def getValues():
         values[1] = 11
     else if values[1] < 0:
         values[1] = 0
+
     return values

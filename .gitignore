@@ -2,3 +2,6 @@
 *.pyc
 SolarKeeperGUI_Beach/__pycache__
 SolarKeeperGUI_Hotel/__pycache__
+
+#Ignore README
+README.md

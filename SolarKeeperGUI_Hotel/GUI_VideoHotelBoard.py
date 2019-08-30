@@ -3,7 +3,7 @@
 
 from backend import *
 
-#values = [0:uvValueA 1:uVindex 2:tempAr 3:HumAr 4:tempAgua 5:pH 6:ConcentrCloro]
+# values = [0:uvValueA 1:uVindex 2:tempAr 3:HumAr 4:tempAgua 5:pH 6:ConcentrCloro]
 values = [0, 0, 18, 0, 14.3, 7.3, 9.8]
 
 
@@ -43,13 +43,14 @@ idPUB = 0
 flagIndex = 0
 
 window.geometry("320x480")
-#window.attributes('-fullscreen','true')
+# window.attributes('-fullscreen','true')
 window.resizable(False, False)
 window.wm_attributes('-topmost', 1)
 
-window.bind("<Escape>", lambda event:window.destroy())
-#window.bind("<Return>", lambda event:changeUV())
+window.bind("<Escape>", lambda event: window.destroy())
+# window.bind("<Return>", lambda event:changeUV())
 window.config(background='black', cursor='none')
+
 
 def changeValues():
     global values
@@ -73,60 +74,59 @@ def changeValues():
     global labelArinfo
     global labelA
     global labelAinfo
-    #values = getValues()
+    # values = getValues()
     try:
          values = getValues()
          labelWifi.configure(image = '')
     except Exception as exc:
         print("ERROR: Fail to parsing data")
         print("getValues(): " + str(exc))
-        labelWifi.configure(image = wifiLogo)
-        labelLocalTime.configure(text = datetime.now().strftime('%Y-%m-%d\n%H:%M'))
-
+        labelWifi.configure(image=wifiLogo)
+        labelLocalTime.configure(text=datetime.now().strftime('%Y-%m-%d\n%H:%M'))
 
     backgroundColor = setUVColor(int(values[1]))
 
-    labelLocalTime.configure(bg = backgroundColor, text = datetime.now().strftime('%Y-%m-%d\n%H:%M'))
-    labelWifi.configure(bg = backgroundColor)
-    labelTitle.configure(bg = backgroundColor)
+    labelLocalTime.configure(bg=backgroundColor, text=datetime.now().strftime('%Y-%m-%d\n%H:%M'))
+    labelWifi.configure(bg=backgroundColor)
+    labelTitle.configure(bg=backgroundColor)
     # change UV index value and color
     varUV.set(str(int(values[1])).zfill(2))
-    labelUV.configure(image = '', bg = backgroundColor)
-    labelUVIndexText.configure(text = setTextInfo(int(values[1])), bg = backgroundColor, font=("Segoe UI", 20), fg = 'white')
+    labelUV.configure(image='', bg=backgroundColor)
+    labelUVIndexText.configure(text=setTextInfo(int(values[1])), bg=backgroundColor, font=("Segoe UI", 20), fg = 'white')
     # change pH values
     try:
-        labelPH.configure(text = locale.format_string("%.1f", (values[5],1)), bg = backgroundColor)
-        #labelPH.configure(bg = backgroundColor)
+        labelPH.configure(text=locale.format_string("%.1f", (values[5], 1\)), bg=backgroundColor))
+        # labelPH.configure(bg = backgroundColor)
         labelPHinfo.configure(bg = backgroundColor)
         # change Water Clorium value
         labelCl.configure(text = locale.format_string("%.1f", (values[6],1)), bg = backgroundColor)
-        #labelCl.configure(bg = backgroundColor)
+        # labelCl.configure(bg = backgroundColor)
         labelClinfo.configure(bg = backgroundColor)
         # change Air Temp value
-        labelAr.configure(text = locale.format_string("%.1f", (values[2],1)), bg = backgroundColor)
-        labelArinfo.configure(bg = backgroundColor)
+        labelAr.configure(text=locale.format_string("%.1f", (values[2],1)), bg = backgroundColor)
+        labelArinfo.configure(bg=backgroundColor)
         # change Water Temp value
-        labelA.configure(text = locale.format_string("%.1f", (values[4],1)), bg = backgroundColor)
-        #labelA.configure(bg = backgroundColor)
-        labelAinfo.configure(bg = backgroundColor)
+        labelA.configure(text=locale.format_string("%.1f", (values[4],1)), bg = backgroundColor)
+        # labelA.configure(bg = backgroundColor)
+        labelAinfo.configure(bg=backgroundColor)
     except Exception as exc:
-        print("Error: " +str(exc))
-        labelPH.configure(bg = backgroundColor)
-        #labelPH.configure(bg = backgroundColor)
-        labelPHinfo.configure(bg = backgroundColor)
+        print("Error: " + str(exc))
+        labelPH.configure(bg=backgroundColor)
+        # labelPH.configure(bg = backgroundColor)
+        labelPHinfo.configure(bg=backgroundColor)
         # change Water Clorium value
-        labelCl.configure(bg = backgroundColor)
-        #labelCl.configure(bg = backgroundColor)
-        labelClinfo.configure(bg = backgroundColor)
+        labelCl.configure(bg=backgroundColor)
+        # labelCl.configure(bg = backgroundColor)
+        labelClinfo.configure(bg=backgroundColor)
         # change Air Temp value
-        labelAr.configure(bg = backgroundColor)
-        labelArinfo.configure(bg = backgroundColor)
+        labelAr.configure(bg=backgroundColor)
+        labelArinfo.configure(bg=backgroundColor)
         # change Water Temp value
-        labelA.configure(bg = backgroundColor)
-        #labelA.configure(bg = backgroundColor)
-        labelAinfo.configure(bg = backgroundColor)
+        labelA.configure(bg=backgroundColor)
+        # labelA.configure(bg = backgroundColor)
+        labelAinfo.configure(bg=backgroundColor)
 
-    if flagPUB == True:
+    if flagPUB is True:
         if flagIndex == 6:
             flagIndex = 0
             flagPUB = False
@@ -134,6 +134,7 @@ def changeValues():
         window.after(3000, changeValues)
     else:
         window.after(5000, changeWaring)
+
 
 def video():
     global capture
@@ -143,12 +144,13 @@ def video():
     if not has_frame:
         window.after(1, createFrameImage)
         return
-    cv2image = cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
-    img = Image.fromarray(cv2image)
-    imgtk = ImageTk.PhotoImage(image=img)
-    labelPUB.imgtk = imgtk
-    labelPUB.configure(image=imgtk)
+    cv2image=cv2.cvtColor(frame, cv2.COLOR_BGR2RGBA)
+    img=Image.fromarray(cv2image)
+    imgtk=ImageTk.PhotoImage(image=img)
+    labelPUB.imgtk=imgtk
+    labelPUB.configure(image = imgtk)
     window.after(15, video)
+
 
 def changePUB():
     global flagPUB
@@ -162,14 +164,15 @@ def changePUB():
     capture = cv2.VideoCapture(r"files/HotelPub.mp4")
 
     framePUB = Frame(window)
-    labelPUB = Label(framePUB, bg = "black", anchor = CENTER)
-    labelPUB.pack(fill = BOTH, expand = True)
-    framePUB.pack(fill = BOTH, expand = True)
+    labelPUB = Label(framePUB, bg="black", anchor=CENTER)
+    labelPUB.pack(fill=BOTH, expand=True)
+    framePUB.pack(fill=BOTH, expand=True)
 
     frameWarning.destroy()
     flagPUB = True
 
     window.after(1, video)
+
 
 def changeWaring():
     global frameWarning
@@ -177,10 +180,10 @@ def changeWaring():
     global windowValue
     global imgWarning
 
-    imgWarning = PhotoImage(file = r"files/prec.png")
+    imgWarning = PhotoImage(file=r"files/prec.png")
 
     frameWarning = Frame(window)
-    labelWarning = Label(frameWarning, bg = "black", image = imgWarning, anchor = CENTER)
+    labelWarning = Label(frameWarning, bg="black", image=imgWarning, anchor=CENTER)
     labelWarning.pack(fill = BOTH, expand = True)
     frameWarning.pack(fill = BOTH, expand = True)
 

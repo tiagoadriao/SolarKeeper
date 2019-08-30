@@ -1,4 +1,4 @@
-from tkinter import *
+from Tkinter import *
 from time import sleep
 import locale
 import functools
@@ -57,7 +57,7 @@ def getValues():
     print(values)
     if values[1] > 11:
         values[1] = 11
-    else if values[1] < 0:
+    elif values[1] < 0:
         values[1] = 0
 
     return values

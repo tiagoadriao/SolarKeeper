@@ -1,7 +1,6 @@
 # Ignore Cache files
 *.pyc
-SolarKeeperGUI_Beach/__pycache__
-SolarKeeperGUI_Hotel/__pycache__
+__pycache__
 
 #Ignore README
 README.md

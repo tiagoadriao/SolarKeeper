@@ -2,7 +2,7 @@
 #include <WiFiNINA.h>
 #include "arduino_secrets.h"
 #include <Wire.h>
-#include "Adafruit_VEML6070.h"
+//#include "Adafruit_VEML6070.h"
 #include "Adafruit_VEML6075.h"
 #include "DHT.h"
 #include <OneWire.h>

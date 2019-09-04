@@ -4,3 +4,6 @@ __pycache__
 
 #Ignore README
 README.md
+
+#Ignore ConfigFile
+ConfigFiles

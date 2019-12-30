@@ -1,6 +1,7 @@
 # Ignore Cache files
 *.pyc
 __pycache__
+PyQt Test
 
 #Ignore README
 README.md

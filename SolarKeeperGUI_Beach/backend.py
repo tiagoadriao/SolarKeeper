@@ -38,7 +38,7 @@ def convertCtoF(tempC):
         tempF = tempC * 9/5 + 32
         return tempF
 
-
+#uses the BeautifulSoup to scrap the web page with the information.
 def getValues():
     values = []
     try:

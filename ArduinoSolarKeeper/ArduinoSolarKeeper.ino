@@ -8,6 +8,23 @@
 #include <OneWire.h>
 #include <DallasTemperature.h>
 
+/** INFORMATION
+
+This code is used to read UV index from a VEML6075, air temperature from a DHT22, and the water temperature from a DS18B20.
+
+A arduino Wifi rev.2 was used to send the information via a self Wi-Fi Access Point via a WebAPI (HTTP GET) which sends the following information:
+  [0:uvValueA 1:uVindex 2:tempAr 3:HumAr 4:tempAgua 5:pH 6:ConcentrCloro]
+
+uVValueA = raw UV value;
+UVIndex = index calculated by VEML6075 algorithm;
+tempAr = air temperature;
+HumAr = Air Pressure (Humidity);
+TempAgua = Water temperute measured from Hotel pools;
+pH = pH value from pool's water;
+ConcentrCloro = chlorine concentration (to be tested);
+
+*/
+
 char ssid[] = SECRET_SSID;    // your network SSID (name)
 char pass[] = SECRET_PASS;    // your network password (use for WPA, or use as key for WEP)
 
@@ -165,7 +182,7 @@ void setup() {
       Serial.println("Continuous reading mode");
     }
   
-    // Set the calibration coefficients
+    // Set the calibration coefficients for UV
     uv.setCoefficients(2.22, 1.33,  // UVA_A and UVA_B coefficients
                        2.95, 1.74,  // UVB_C and UVB_D coefficients
                        0.001461, 0.002591); // UVA and UVB responses
@@ -177,7 +194,7 @@ void setup() {
 }
 
 void loop() {
-  { //DHT11
+  { //DHT11 air temperature sensor
     delay(2000);
     // Reading temperature or humidity takes about 250 milliseconds!
     // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
@@ -200,7 +217,7 @@ void loop() {
     Serial.print(hic);
     Serial.println(F("°C "));
   }
-  { //DS18B20
+  { //DS18B20 water temperature sensor
     delay(1000);
     Serial.print("Requesting temperatures...");
     sensors.requestTemperatures(); // Send the command to get temperatures
@@ -217,7 +234,7 @@ void loop() {
 //    Serial.print(" UV Index: "); Serial.println(index);
 //  }
 
-  { //UV_VEML6075
+  { //UV_VEML6075 UV index sensor
     uvRawA = uv.readUVA();
     uvRawB = uv.readUVB();
     uvIndex = uv.readUVI();
@@ -246,7 +263,7 @@ void loop() {
       printTime = millis();
     }
   }
-  { //ORP meter
+  { //ORP meter (Chlorine concentration sensor)
     if (millis() >= orpTimer)
     {
       orpTimer = millis() + 20;
@@ -264,7 +281,8 @@ void loop() {
       Serial.println("mV");
     }
   }
-  { //WebServer message
+
+  { //WebAPI
     //values = [0:uvValue 1:uVindex 2:tempAr 3:HumAr 4:tempAgua 5:pH 6:ConcentrCloro]
     message = String(uvRawA) + " " + String(uvIndex) + " " + String(hic) + " " + String(h) + " " + String(tempW) + " " + String(pHValue) + " " + String(orpValue);
     Serial.println(message);
@@ -334,6 +352,7 @@ String prepareHtmlPage() {
   return htmlPage;
 }
 
+//this method is used on ORP and pH calculations to get an average meter.
 double avergearray(int* arr, int number) {
   int i;
   int max, min;

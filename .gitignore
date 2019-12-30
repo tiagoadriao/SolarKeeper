@@ -5,3 +5,6 @@ PyQt Test
 
 #Ignore README
 README.md
+
+#Ignore ConfigFile
+ConfigFiles

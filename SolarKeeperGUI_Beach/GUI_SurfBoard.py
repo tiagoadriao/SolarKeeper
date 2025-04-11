@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # coding=utf-8
 
 from backend import *
@@ -11,13 +11,14 @@ window = Tk()
 varUV = StringVar()
 varUV.set(str().zfill(2))
 
-logo = PhotoImage(file = r"files/3.png").subsample(16,16)
-solarLogo = PhotoImage(file = r"files/0.png")
-wifiLogo = PhotoImage(file = r"files/w.png").subsample(20,20)
+logo = PhotoImage(file = r"./files/3.png").subsample(16,16)
+solarLogo = PhotoImage(file = r"./files/0.png")
+wifiLogo = PhotoImage(file = r"./files/w.png").subsample(20,20)
 
 #window.geometry("320x480")
-window.attributes('-fullscreen','true')
-window.resizable(False, False)
+#window.wm_attributes('-fullscreen','true')
+window.wm_attributes('-zoomed','true')
+#window.resizable(False, False)
 window.wm_attributes('-topmost', 1)
 
 window.bind("<Escape>", lambda event:window.destroy())
@@ -71,22 +72,22 @@ def changeValues():
 frameTitle = Frame(window)
 
 labelLocalTime = Label(frameTitle, bg = "blue", text = datetime.now().strftime('%Y-%m-%d\n%H:%M'), font=("Segoe UI", 9, "bold"), fg = "white", width = 3, anchor = "nw", justify=LEFT)
-labelLocalTime.pack(fill = BOTH, side = LEFT, expand = True)
+labelLocalTime.pack(fill = 'both', side = LEFT, expand = True)
 labelWifi = Label(frameTitle, bg = "blue", anchor = "ne")
-labelWifi.pack(fill = BOTH, side = RIGHT, expand = True)
+labelWifi.pack(fill = 'both', side = RIGHT, expand = True)
 labelTitle = Label(frameTitle, bg = "blue", text = "Índice UV\nUV Index", font=("Segoe UI", 16, "bold"), fg = "white", anchor = "center")
-labelTitle.pack(fill = X, side=TOP, expand = True)
-frameTitle.pack(fill=X)
+labelTitle.pack(fill = 'x', side=TOP, expand = True)
+frameTitle.pack(fill='x')
 
 frameUV = Frame(window)
 
 # labelUVInfo = Label(frameUV, bg = "blue", text = "Índice UV\nUV Index", font=("Segoe UI", 18), fg = "white", anchor = "center")
 # labelUVInfo.pack(fill = BOTH, side=TOP, expand = True)
 labelUV = Label(frameUV, textvariable = varUV, image = solarLogo, bg = 'blue', font=("Segoe UI", 130, "bold"), fg = "white", highlightthickness = 0, bd = 0)
-labelUV.pack(fill = BOTH, side=TOP)
+labelUV.pack(fill = 'both', side=TOP)
 labelUVIndexText = Label(frameUV, text = "\nSOLAR KEEPER", bg = 'blue', font=("Segoe UI", 20), fg = "black", anchor = "center")
-labelUVIndexText.pack(fill = BOTH, side=TOP, expand = True)
-frameUV.pack(fill=X)
+labelUVIndexText.pack(fill = 'both', side=TOP, expand = True)
+frameUV.pack(fill='x')
 
 frameInfo = Frame(window)
 
@@ -107,18 +108,18 @@ frameInfo.pack(fill=BOTH, expand = True)
 frameValues = Frame(window)
 
 labelTide = Label(frameValues, bg = "blue", text = "14:50\n20:38", font=("Segoe UI", 16), fg = "white", anchor = "center", width = 2, height=2)
-labelTide.pack(fill = BOTH, side=LEFT, expand=True)
+labelTide.pack(fill = 'both', side=LEFT, expand=True)
 
 labelQual = Label(frameValues, bg = "blue", image = logo, font=("Segoe UI", 16), fg = "white", anchor = "center", width = 2, height=2)
-labelQual.pack(fill = BOTH, side=LEFT, expand=True)
+labelQual.pack(fill = 'both', side=LEFT, expand=True)
 
 labelA = Label(frameValues, bg = "blue", text = locale.format_string("%.1fºC",(14.3)), font=("Segoe UI",16), fg = "white", anchor = "center", width = 2, height=2)
-labelA.pack(fill = BOTH, side=LEFT, expand=True)
+labelA.pack(fill = 'both', side=LEFT, expand=True)
 
 labelAr = Label(frameValues, bg = "blue", text = locale.format_string("%.1fºC", (18)), font=("Segoe UI", 16), fg = "white", anchor = "center", width = 2, height=2)
-labelAr.pack(fill = BOTH, side=LEFT, expand=True)
+labelAr.pack(fill = 'both', side=LEFT, expand=True)
 
-frameValues.pack(fill=BOTH, expand = True)
+frameValues.pack(fill='both', expand = True)
 
 
 window.after(5000, changeValues)
